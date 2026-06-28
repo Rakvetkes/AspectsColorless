@@ -80,7 +80,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <!--<PackageReference Include="Alchyr.Sts2.BaseLib" Version="*" PrivateAssets="All"/>-->
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="*" PrivateAssets="All"/>
         <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="All"/>
         <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="*"/>
         <AdditionalFiles Include="AspectsColorless/localization/**/*.json"/> <!-- Used by analyzer -->
@@ -102,6 +102,11 @@
         <None Include="AspectsColorless.json"/>
         <None Include="project.godot"/>
         <None Include="AspectsColorless/**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="AspectsColorlessCode\Cards\" />
+      <Folder Include="AspectsColorless\images\card_portraits\" />
     </ItemGroup>
 
     <Target Name="CheckDependencyPaths">
