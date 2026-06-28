@@ -5,7 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 
 namespace AspectsColorless.AspectsColorlessCode.Abstract;
 
-public abstract class ACardModel(int cost, CardType cardType, CardRarity cardRarity, TargetType targetType) :
+public abstract class AspectsCardModel(int cost, CardType cardType, CardRarity cardRarity, TargetType targetType) :
     CustomCardModel(cost, cardType, cardRarity, targetType)
 {
     public override string CustomPortraitPath => GetCardImagePath(Id.Entry);
