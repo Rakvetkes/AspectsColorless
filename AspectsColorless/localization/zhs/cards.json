@@ -1,4 +1,11 @@
 {
+  "ASPECTSCOLORLESS-DRUNK.title": "醉酒",
+  "ASPECTSCOLORLESS-DRUNK.description": "抽到时，获得{StrengthPower:diff()}点[gold]力量[/gold]。",
+  
   "ASPECTSCOLORLESS-WEIRDO.title": "好东西！",
-  "ASPECTSCOLORLESS-WEIRDO.description": "[gold]转化[/gold]{IfUpgraded:show:并[gold]升级[/gold]|}你[gold]抽牌堆[/gold]顶的牌。\n将其放入你的[gold]手牌[/gold]。"
+  "ASPECTSCOLORLESS-WEIRDO.description": "[gold]转化[/gold]{IfUpgraded:show:并[gold]升级[/gold]|}你[gold]抽牌堆[/gold]顶的牌。\n将其放入你的[gold]手牌[/gold]。",
+  "ASPECTSCOLORLESS-GOLDEN_LANCE.title" : "黄金长枪",
+  "ASPECTSCOLORLESS-GOLDEN_LANCE.description" : "造成{Damage:diff()}点伤害。\n每场战斗第三次打出时，伤害变为三倍。",
+  "ASPECTSCOLORLESS-HAPPY_HOUR.title" : "欢乐时光！",
+  "ASPECTSCOLORLESS-HAPPY_HOUR.description" : "将所有手牌[gold]转化[/gold]为{IfUpgraded:show:[gold]醉酒+[/gold]|[gold]醉酒[/gold]}。\n从你的[gold]牌组[/gold]移除这张牌。"
 }

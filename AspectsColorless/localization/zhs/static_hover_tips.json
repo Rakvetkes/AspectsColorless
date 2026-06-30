@@ -1,4 +1,4 @@
 {
   "TRANSMUTE.title": "转化",
-  "TRANSMUTE.description": "[gold]变化[/gold]为随机牌。如果这张牌属于你的牌组，它也会在牌组中被同时[gold]变化[/gold]。"
+  "TRANSMUTE.description": "[gold]变化[/gold]为随机牌。如果这张牌属于你的[gold]牌组[/gold]，它也会在[gold]牌组[/gold]中被同时[gold]变化[/gold]。"
 }

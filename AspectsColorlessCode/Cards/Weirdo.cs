@@ -22,7 +22,7 @@ public class Weirdo() : AspectsCardModel(0, CardType.Skill, CardRarity.Rare, Tar
         CardModel? card = PileType.Draw.GetPile(this.Owner).Cards.FirstOrDefault();
         if (card != null)
         {
-            var result = (await AspectsCmd.Transmute(card, this.Owner)).First()!.Value.cardAdded;
+            var result = (await AspectsCmd.TransmuteToRandom(card, this.Owner)).First()!.Value.cardAdded;
             
             if (this.IsUpgraded)
             {
