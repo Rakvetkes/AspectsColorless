@@ -27,11 +27,11 @@ static_hover_tips.json::JSON::-1::1782841534::0::1::::<><><>0<>0<><>::
 ::res://AspectsColorlessCode/Commands/::1782840326
 ::res://AspectsColorlessCode/Enumerations/::1782995441
 ::res://AspectsColorlessCode/Patches/::1783003310
-::res://AspectsColorlessCode/Powers/::1783003557
+::res://AspectsColorlessCode/Powers/::1783003819
 ::res://bin/::1782646038
 ::res://bin/ExportRelease/::1782646038
 ::res://bin/ExportRelease/net9.0/::1782646038
-::res://bin/ExportRelease/net9.0/publish/::1783003599
+::res://bin/ExportRelease/net9.0/publish/::1783003858
 AspectsColorless.deps.json::JSON::-1::1783002259::0::1::::<><><>0<>0<><>::
 ::res://packages/::1782638880
 ::res://packages/alchyr.sts2.baselib/::1782638698
