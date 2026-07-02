@@ -27,7 +27,7 @@ public class GoldenLance() : AspectsCardModel(3, CardType.Attack, CardRarity.Rar
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer,
         CardModel? cardSource)
     {
-        return cardSource == this && _playCountThisCombat == 2 ? 3M : 1M;
+        return cardSource == this && _playCountThisCombat == 1 ? 3M : 1M;
     }
 
     protected override void OnUpgrade()

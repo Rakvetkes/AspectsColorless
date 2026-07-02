@@ -106,6 +106,7 @@
 
     <ItemGroup>
       <Folder Include="AspectsColorless\images\card_portraits\" />
+      <Folder Include="AspectsColorless\images\powers\" />
     </ItemGroup>
 
     <Target Name="CheckDependencyPaths">

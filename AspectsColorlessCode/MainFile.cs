@@ -1,6 +1,8 @@
+using AspectsColorless.AspectsColorlessCode.Patches;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
+using MegaCrit.Sts2.Core.Saves.Runs;
 
 namespace AspectsColorless.AspectsColorlessCode;
 
@@ -15,8 +17,10 @@ public partial class MainFile : Node
 
     public static void Initialize()
     {
-        Harmony harmony = new(ModId);
+        // 注入自定义属性名，否则 SavedProperties 二进制封包序列化会崩
+        SavedPropertiesTypeCache.InjectTypeIntoCache(typeof(KeywordsPatch.CycleSavePlaceholder));
 
+        Harmony harmony = new(ModId);
         harmony.PatchAll();
     }
 }

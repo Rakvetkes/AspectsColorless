@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 namespace AspectsColorless.AspectsColorlessCode.Cards;
 
 [Pool(typeof(ColorlessCardPool))]
-public class HappyHour() : AspectsCardModel(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
+public class HappyHour() : AspectsCardModel(0, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

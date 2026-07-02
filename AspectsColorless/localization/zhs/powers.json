@@ -1,0 +1,5 @@
+﻿{
+  "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.title": "月之护符",
+  "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.description": "每当你打出一张[gold]攻击牌[/gold]，且其造成的伤害与这张牌的费用具有相同的奇偶性时，返还其费用。",
+  "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.smartDescription": "每当你打出一张[gold]攻击牌[/gold]，且其造成的伤害为{Amount:plural:偶数|奇数}时，返还其费用。"
+}

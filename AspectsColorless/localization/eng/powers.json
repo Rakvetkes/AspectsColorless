@@ -1,0 +1,5 @@
+﻿{
+  "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.title": "Lunari Charm",
+  "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.description": "Whenever you play an [gold]Attack[/gold] that deals damage with the same parity as the cost of this card, refund its cost.",
+  "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.smartDescription": "Whenever you play an [gold]Attack[/gold] that deals {Amount:plural:even|odd} damage, refund its cost."
+}

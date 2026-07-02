@@ -27,6 +27,10 @@ public class Weirdo() : AspectsCardModel(0, CardType.Skill, CardRarity.Rare, Tar
             if (this.IsUpgraded)
             {
                 CardCmd.Upgrade(result);
+                if (result.DeckVersion != null)
+                {
+                    CardCmd.Upgrade(result.DeckVersion);
+                }
             }
             await CardPileCmd.Add(result, PileType.Hand);
         }

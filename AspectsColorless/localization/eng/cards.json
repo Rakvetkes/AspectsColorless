@@ -5,7 +5,9 @@
   "ASPECTSCOLORLESS-WEIRDO.title": "Weirdo!",
   "ASPECTSCOLORLESS-WEIRDO.description": "[gold]Transmute[/gold]{IfUpgraded:show: and [gold]Upgrade[/gold]|} the top card of your [gold]Draw Pile[/gold].\nPut it into your [gold]Hand[/gold].",
   "ASPECTSCOLORLESS-GOLDEN_LANCE.title" : "Golden Lance",
-  "ASPECTSCOLORLESS-GOLDEN_LANCE.description" : "Deal {Damage:diff()} damage.\nThe third time this card is played each combat, triple the damage.",
+  "ASPECTSCOLORLESS-GOLDEN_LANCE.description" : "Deal {Damage:diff()} damage.\nThe second time this card is played each combat, triple the damage.",
   "ASPECTSCOLORLESS-HAPPY_HOUR.title" : "Happy Hour!",
-  "ASPECTSCOLORLESS-HAPPY_HOUR.description" : "[gold]Transmute[/gold] all cards in your [gold]Hand[/gold] into {IfUpgraded:show:[gold]Drunk+[/gold]|[gold]Drunk[/gold]}.\nRemove this card from your [gold]Deck[/gold]."
+  "ASPECTSCOLORLESS-HAPPY_HOUR.description" : "[gold]Transmute[/gold] all cards in your [gold]Hand[/gold] into {IfUpgraded:show:[gold]Drunk+[/gold]|[gold]Drunk[/gold]}.\nRemove this card from your [gold]Deck[/gold].",
+  "ASPECTSCOLORLESS-LUNARI_CHARM.title": "Lunari Charm",
+  "ASPECTSCOLORLESS-LUNARI_CHARM.description": "Whenever you play an [gold]Attack[/gold] that deals damage with the same parity as the cost of this card, refund its cost."
 }
