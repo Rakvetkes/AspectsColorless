@@ -12,7 +12,6 @@ namespace AspectsColorless.AspectsColorlessCode.Patches;
 [HarmonyPatch]
 public static class KeywordsPatch
 {
-    // ── Runtime storage: 弱引用，不阻止卡牌实例被 GC ──
     private static readonly ConditionalWeakTable<CardModel, CycleData> CycleStore = new();
 
     private sealed class CycleData
@@ -21,8 +20,7 @@ public static class KeywordsPatch
     }
 
     /// <summary>
-    /// 仅用于向 SavedPropertiesTypeCache 注册 "AC_CycleCost" 属性名，
-    /// 这样二进制封包序列化时能查到对应的 netId，否则会崩。
+    /// 仅用于向 SavedPropertiesTypeCache 注册 "AC_CycleCost" 属性名。
     /// </summary>
     internal sealed class CycleSavePlaceholder
     {
@@ -42,9 +40,6 @@ public static class KeywordsPatch
         card.EnergyCost.SetCustomBaseCost(cost);
     }
 
-    // ═══════════════════════════════════════════════════════════
-    //  存档：把 cycleCost 注入 SavedProperties
-    // ═══════════════════════════════════════════════════════════
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CardModel), nameof(CardModel.ToSerializable))]
     private static void ToSerializable_Postfix(CardModel __instance, ref SerializableCard __result)
@@ -59,9 +54,6 @@ public static class KeywordsPatch
         __result.Props.ints.Add(new SavedProperties.SavedProperty<int>("AC_CycleCost", data.Cost));
     }
 
-    // ═══════════════════════════════════════════════════════════
-    //  读档：从 SavedProperties 提取 cycleCost 并恢复
-    // ═══════════════════════════════════════════════════════════
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CardModel), nameof(CardModel.FromSerializable))]
     private static void FromSerializable_Postfix(SerializableCard save, ref CardModel __result)
@@ -77,9 +69,6 @@ public static class KeywordsPatch
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
-    //  打出后：推进轮转到下一个费用
-    // ═══════════════════════════════════════════════════════════
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CardModel), nameof(CardModel.OnPlayWrapper))]
     public static void OnPlayWrapper_Postfix(CardModel __instance,

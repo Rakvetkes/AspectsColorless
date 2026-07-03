@@ -9,5 +9,7 @@
   "ASPECTSCOLORLESS-HAPPY_HOUR.title" : "Happy Hour!",
   "ASPECTSCOLORLESS-HAPPY_HOUR.description" : "[gold]Transmute[/gold] all cards in your [gold]Hand[/gold] into {IfUpgraded:show:[gold]Drunk+[/gold]|[gold]Drunk[/gold]}.\nRemove this card from your [gold]Deck[/gold].",
   "ASPECTSCOLORLESS-LUNARI_CHARM.title": "Lunari Charm",
-  "ASPECTSCOLORLESS-LUNARI_CHARM.description": "Whenever you play an [gold]Attack[/gold] that deals damage with the same parity as the cost of this card, refund its cost."
+  "ASPECTSCOLORLESS-LUNARI_CHARM.description": "Whenever you play an [gold]Attack[/gold] that deals damage with the same parity as the cost of this card, refund its cost.",
+  "ASPECTSCOLORLESS-THE_RUNE.title": "The Rune",
+  "ASPECTSCOLORLESS-THE_RUNE.description": "Whenever you gain energy during your turn, draw 1 card."
 }
