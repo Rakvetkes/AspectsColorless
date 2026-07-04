@@ -20,12 +20,12 @@ public class GoldenLance() : AspectsCardModel(3, CardType.Attack, CardRarity.Rar
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).WithHitFx("vfx/vfx_dramatic_stab", tmpSfx: "blunt_attack.mp3").Execute(choiceContext);
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this, cardPlay).Targeting(cardPlay.Target!).WithHitFx("vfx/vfx_dramatic_stab", tmpSfx: "blunt_attack.mp3").Execute(choiceContext);
         ++_playCountThisCombat;
     }
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource, CardPlay? cardPlay)
     {
         return cardSource == this && _playCountThisCombat == 1 ? 3M : 1M;
     }
