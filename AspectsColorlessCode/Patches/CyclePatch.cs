@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Saves.Runs;
 namespace AspectsColorless.AspectsColorlessCode.Patches;
 
 [HarmonyPatch]
-public static class KeywordsPatch
+public static class CyclePatch
 {
     private static readonly ConditionalWeakTable<CardModel, CycleData> CycleStore = new();
 

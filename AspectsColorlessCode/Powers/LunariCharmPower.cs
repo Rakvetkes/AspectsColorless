@@ -25,6 +25,7 @@ public class LunariCharmPower : AspectsPowerModel
 
             if ((totalDamage - this.Amount) % 2 == 0)
             {
+                this.Flash();
                 await PlayerCmd.GainEnergy(card.EnergyCost.GetResolved(), command.Attacker.Player!);
             }
         }

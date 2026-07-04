@@ -12,13 +12,13 @@ public class TheRunePower : AspectsPowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override decimal ModifyEnergyGain(Player player, decimal amount)
+    public override async Task AfterEnergyGained(PlayerChoiceContext ctx, Player player, decimal amount)
     {
-        if (amount > 0 && this.Owner.Player is { PlayerCombatState.Phase: PlayerTurnPhase.Play })
+        if (/* this.Owner.Player == player && */this.Owner.Player is { PlayerCombatState.Phase: PlayerTurnPhase.Play })
         {
-            CardPileCmd.Draw(new ThrowingPlayerChoiceContext(), this.Amount, this.Owner.Player);
+            this.Flash();
+            await CardPileCmd.Draw(ctx, this.Amount, this.Owner.Player);
         }
-
-        return amount;
     }
+    
 }

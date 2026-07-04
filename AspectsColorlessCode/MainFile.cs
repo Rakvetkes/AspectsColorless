@@ -18,7 +18,7 @@ public partial class MainFile : Node
     public static void Initialize()
     {
         // 注入自定义属性名，否则 SavedProperties 二进制封包序列化会崩
-        SavedPropertiesTypeCache.InjectTypeIntoCache(typeof(KeywordsPatch.CycleSavePlaceholder));
+        SavedPropertiesTypeCache.InjectTypeIntoCache(typeof(CyclePatch.CycleSavePlaceholder));
 
         Harmony harmony = new(ModId);
         harmony.PatchAll();
