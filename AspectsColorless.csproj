@@ -109,6 +109,11 @@
       <Folder Include="AspectsColorless\images\powers\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="AGENTS.md" />
+      <Content Include="CLAUDE.md" />
+    </ItemGroup>
+
     <Target Name="CheckDependencyPaths">
         <Error
                 Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'"
