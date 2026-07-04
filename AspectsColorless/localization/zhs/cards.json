@@ -14,5 +14,5 @@
   "ASPECTSCOLORLESS-THE_RUNE.description": "你在回合进行中获得能量时，抽1张牌。",
 
   "ASPECTSCOLORLESS-PENNY.title": "一便士",
-  "ASPECTSCOLORLESS-PENNY.description": "回合结束时，若此牌在你的手牌中，获得{Gold:diff()}点[gold]金币[/gold]。"
+  "ASPECTSCOLORLESS-PENNY.description": "回合结束时，若此牌在你的手牌中，获得{Gold:diff()}[gold]金币[/gold]。"
 }
