@@ -7,11 +7,12 @@ export_presets.cfg::TextFile::-1::1782638646::0::1::::<><><>0<>0<><>::
 ::res://AspectsColorless/::1783144883
 mod_image.png::CompressedTexture2D::1697755827506903109::1782638645::1782646054::1::::<><><>0<>0<>7793c7340e0fd8d8894a1cd64a3bba7f<>res://.godot/imported/mod_image.png-69ff1fa3c33079888402c406ddf01a40.ctex::
 ::res://AspectsColorless/images/::1782994828
-::res://AspectsColorless/images/card_portraits/::1783148259
+::res://AspectsColorless/images/card_portraits/::1783160508
 card.png::CompressedTexture2D::3293838634666468509::1777452070::1782662445::1::::<><><>0<>0<>64dc054a810c2491623f4cf8f8a4e549<>res://.godot/imported/card.png-d2e3cc78a417378cd1cfd63fe999e76e.ctex::
 drunk.png::CompressedTexture2D::8002745914351937030::1777452070::1782844014::1::::<><><>0<>0<>571d120627e41e026cf11c7da2d39719<>res://.godot/imported/drunk.png-7a69c92d30d83f25aeb943b62770d80a.ctex::
-penny.png::CompressedTexture2D::1263762525705845215::1783148104::1783150441::1::::<><><>0<>0<>deae93dfa41bd5411a01253814f0dde9<>res://.godot/imported/penny.png-87df2a35698a9dbd0a9492615585b31f.ctex::
-the_rune.png::CompressedTexture2D::1951130105241486673::1783148259::1783150442::1::::<><><>0<>0<>00e75bc3067b50e36b2aa93ad6886166<>res://.godot/imported/the_rune.png-0f93b363f2dfc3f92d28b0889c955c84.ctex::
+penny.png::CompressedTexture2D::1263762525705845215::1783160818::1783160838::1::::<><><>0<>0<>deae93dfa41bd5411a01253814f0dde9<>res://.godot/imported/penny.png-87df2a35698a9dbd0a9492615585b31f.ctex::
+the_rune.png::CompressedTexture2D::1951130105241486673::1783160785::1783160839::1::::<><><>0<>0<>00e75bc3067b50e36b2aa93ad6886166<>res://.godot/imported/the_rune.png-0f93b363f2dfc3f92d28b0889c955c84.ctex::
+weirdo.png::CompressedTexture2D::2288769785053386437::1783160764::1783160839::1::::<><><>0<>0<>0da35a98764c711008e36be4f7fa7dae<>res://.godot/imported/weirdo.png-98ffdf27178d898faac2d0400946d1f9.ctex::
 ::res://AspectsColorless/images/powers/::1783086824
 lunari_charm_power.png::CompressedTexture2D::1820376073558489270::1782995001::1783002264::1::::<><><>0<>0<>dfd27c8555b622b7108b8b37f4fbf0d3<>res://.godot/imported/lunari_charm_power.png-1fc5f0fdbab143f74cda629d6b0c9b5b.ctex::
 the_rune_power.png::CompressedTexture2D::6168051127300314070::1783086622::1783086824::1::::<><><>0<>0<>188760dfd43483db2f067d3129c9feee<>res://.godot/imported/the_rune_power.png-082f5d45629d0139cf70602225efd654.ctex::
@@ -28,7 +29,7 @@ powers.json::JSON::-1::1783083141::0::1::::<><><>0<>0<><>::
 static_hover_tips.json::JSON::-1::1782841534::0::1::::<><><>0<>0<><>::
 ::res://AspectsColorlessCode/::1783003303
 ::res://AspectsColorlessCode/Abstract/::1783082983
-::res://AspectsColorlessCode/Cards/::1783146770
+::res://AspectsColorlessCode/Cards/::1783152660
 ::res://AspectsColorlessCode/Commands/::1782840326
 ::res://AspectsColorlessCode/Enumerations/::1782995441
 ::res://AspectsColorlessCode/Patches/::1783082477
@@ -36,7 +37,7 @@ static_hover_tips.json::JSON::-1::1782841534::0::1::::<><><>0<>0<><>::
 ::res://bin/::1782646038
 ::res://bin/ExportRelease/::1782646038
 ::res://bin/ExportRelease/net9.0/::1782646038
-::res://bin/ExportRelease/net9.0/publish/::1783150437
+::res://bin/ExportRelease/net9.0/publish/::1783152691
 AspectsColorless.deps.json::JSON::-1::1783146783::0::1::::<><><>0<>0<><>::
 ::res://packages/::1782638880
 ::res://packages/alchyr.sts2.baselib/::1782638698
