@@ -13,7 +13,7 @@ public class Penny() : AspectsCardModel(-1, CardType.Skill, CardRarity.Rare, Tar
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Unplayable];
     public override bool HasTurnEndInHandEffect => true;
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Gold", 5m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Gold", 10m)];
 
     protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
     {

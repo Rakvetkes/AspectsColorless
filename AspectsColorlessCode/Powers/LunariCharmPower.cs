@@ -27,6 +27,11 @@ public class LunariCharmPower : AspectsPowerModel
             {
                 this.Flash();
                 await PlayerCmd.GainEnergy(card.EnergyCost.GetResolved(), command.Attacker.Player!);
+                int starCost = card.LastStarsSpent;
+                if (starCost > 0)
+                {
+                    await PlayerCmd.GainStars(starCost, command.Attacker.Player!);
+                }
             }
         }
     }
