@@ -7,4 +7,7 @@ public static class AspectsKeywords
 {
     [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword Cycle;
+
+    [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword LastResort;
 }

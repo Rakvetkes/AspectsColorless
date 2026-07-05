@@ -1,4 +1,6 @@
 {
   "ASPECTSCOLORLESS-CYCLE.title": "轮转",
-  "ASPECTSCOLORLESS-CYCLE.description": "打出这张牌时，花费永久+1。如果超过了原始花费，重置为0。"
+  "ASPECTSCOLORLESS-CYCLE.description": "打出这张牌时，花费永久+1。如果超过了原始花费，重置为0。",
+  "ASPECTSCOLORLESS-LASTRESORT.title": "最终手段",
+  "ASPECTSCOLORLESS-LASTRESORT.description": "洗牌时，这张牌必然置于抽牌堆底部。"
 }

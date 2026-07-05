@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Context;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -24,8 +25,8 @@ public static class AspectsHook
 
     /// <summary>
     /// 注入 <see cref="M:MegaCrit.Sts2.Core.Commands.PlayerCmd.GainEnergy"/> 末尾的补充钩子，实际获得能量时触发。
-    /// 从当前正在执行的 GameAction 身上偷它的 PlayerChoiceContext 以暂停当前正在执行的 action。
-    /// GainEnergy 只应在卡牌/药水执行期间被调用，偷不到 context 说明出现了不应该发生的调用路径。
+    /// 优先从当前正在执行的 GameAction 身上偷它的 PlayerChoiceContext；
+    /// 如果没有正在执行的 action（如回合开始时遗物触发的能量获取），则仿照 Hook 做法原地创建 HookPlayerChoiceContext。
     /// </summary>
     public static async Task AfterEnergyGained(ICombatState combatState, Player player, decimal amount)
     {
@@ -35,23 +36,41 @@ public static class AspectsHook
             return;
         }
 
-        PlayerChoiceContext ctx = RunManager.Instance.ActionExecutor.CurrentlyRunningAction switch
+        PlayerChoiceContext? ctx = RunManager.Instance.ActionExecutor.CurrentlyRunningAction switch
         {
             PlayCardAction pca => pca.PlayerChoiceContext,
             UsePotionAction upa => upa.PlayerChoiceContext,
             GenericHookGameAction gha => gha.ChoiceContext,
             _ => null
-        } ?? throw new InvalidOperationException(
-            $"AfterEnergyGained called with no stealable context. CurrentlyRunningAction: {RunManager.Instance.ActionExecutor.CurrentlyRunningAction}");
+        };
 
-        foreach (AbstractModel model in IterateCombatHookListeners(combatState))
+        if (ctx != null)
         {
-            if (model is Abstract.AspectsPowerModel aspectsPower)
+            // 有正在执行的 GameAction，直接偷它的 context
+            foreach (AbstractModel model in IterateCombatHookListeners(combatState))
             {
-                ctx.PushModel(model);
-                await aspectsPower.AfterEnergyGained(ctx, player, amount);
-                model.InvokeExecutionFinished();
-                ctx.PopModel(model);
+                if (model is Abstract.AspectsPowerModel aspectsPower)
+                {
+                    ctx.PushModel(model);
+                    await aspectsPower.AfterEnergyGained(ctx, player, amount);
+                    model.InvokeExecutionFinished();
+                    ctx.PopModel(model);
+                }
+            }
+        }
+        else
+        {
+            // 没有正在执行的 GameAction（如回合开始时 HappyFlower 等遗物触发），
+            // 仿照 Hook.BeforeFlush 的做法：为每个 model 原地创建 HookPlayerChoiceContext
+            foreach (AbstractModel model in IterateCombatHookListeners(combatState))
+            {
+                if (model is Abstract.AspectsPowerModel aspectsPower)
+                {
+                    HookPlayerChoiceContext hookCtx = new HookPlayerChoiceContext(model, netId.Value, combatState, GameActionType.Combat);
+                    Task task = aspectsPower.AfterEnergyGained(hookCtx, player, amount);
+                    await hookCtx.AssignTaskAndWaitForPauseOrCompletion(task);
+                    model.InvokeExecutionFinished();
+                }
             }
         }
     }

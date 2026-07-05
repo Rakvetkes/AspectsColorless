@@ -1,4 +1,6 @@
 {
   "ASPECTSCOLORLESS-CYCLE.title": "Cycle",
-  "ASPECTSCOLORLESS-CYCLE.description": "When you play this card, its cost permanently increases by 1. If it exceeds its original cost, it resets to 0."
+  "ASPECTSCOLORLESS-CYCLE.description": "When you play this card, its cost permanently increases by 1. If it exceeds its original cost, it resets to 0.",
+  "ASPECTSCOLORLESS-LASTRESORT.title": "Last Resort",
+  "ASPECTSCOLORLESS-LASTRESORT.description": "When shuffled, this card is always placed at the bottom of the draw pile."
 }

@@ -14,5 +14,7 @@
   "ASPECTSCOLORLESS-THE_RUNE.description": "Whenever you gain energy during your turn, draw 1 card.",
 
   "ASPECTSCOLORLESS-PENNY.title": "Penny",
-  "ASPECTSCOLORLESS-PENNY.description": "At the end of your turn, if this is in your hand, gain {Gold:diff()} [gold]Gold[/gold]."
+  "ASPECTSCOLORLESS-PENNY.description": "At the end of your turn, if this is in your hand, gain {Gold:diff()} [gold]Gold[/gold].",
+  "ASPECTSCOLORLESS-INTERFERENCE.title": "Interference",
+  "ASPECTSCOLORLESS-INTERFERENCE.description": "Remove all [gold]Buffs[/gold] from an enemy. They lose {StrengthLoss:diff()} [gold]Strength[/gold]."
 }

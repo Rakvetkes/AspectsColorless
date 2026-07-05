@@ -14,8 +14,6 @@ namespace AspectsColorless.AspectsColorlessCode.Cards;
 [Pool(typeof(ColorlessCardPool))]
 public class Weirdo() : AspectsCardModel(0, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [AspectsHelpers.StaticHoverTip(AspectsTips.Transmute)];
 

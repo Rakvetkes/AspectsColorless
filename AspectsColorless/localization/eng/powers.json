@@ -1,7 +1,7 @@
 ﻿{
   "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.title": "Lunari Charm",
   "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.description": "Whenever you play an [gold]Attack[/gold] that deals damage with the same parity as the cost of this card, refund its cost.",
-  "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.smartDescription": "Whenever you play an [gold]Attack[/gold] that deals {Amount:plural:even|odd} damage, refund its cost.",
+  "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.smartDescription": "Whenever you play an [gold]Attack[/gold] that deals {Amount:plural:odd|even} damage, refund its cost.",
   "ASPECTSCOLORLESS-THE_RUNE_POWER.title": "The Rune",
   "ASPECTSCOLORLESS-THE_RUNE_POWER.description": "Whenever you gain energy during your turn, draw 1 card.",
   "ASPECTSCOLORLESS-THE_RUNE_POWER.smartDescription": "Whenever you gain energy during your turn, draw [blue]{Amount}[/blue] card."
