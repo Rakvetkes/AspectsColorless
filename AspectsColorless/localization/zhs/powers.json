@@ -1,7 +1,7 @@
 ﻿{
   "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.title": "月之护符",
   "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.description": "每当你打出一张[gold]攻击牌[/gold]，且其造成的伤害与这张牌的费用具有相同的奇偶性时，返还其费用。",
-  "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.smartDescription": "每当你打出一张[gold]攻击牌[/gold]，且其造成的伤害为{Amount:plural:奇数|偶数}时，返还其费用。",
+  "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.smartDescription": "每当你打出一张[gold]攻击牌[/gold]，且其造成的伤害为{Amount:choose(1|2):奇数|偶数}时，返还其费用。",
   "ASPECTSCOLORLESS-THE_RUNE_POWER.title": "符文",
   "ASPECTSCOLORLESS-THE_RUNE_POWER.description": "你在回合进行中获得能量时，抽1张牌。",
   "ASPECTSCOLORLESS-THE_RUNE_POWER.smartDescription": "你在回合进行中获得能量时，抽[blue]{Amount}[/blue]张牌。"
