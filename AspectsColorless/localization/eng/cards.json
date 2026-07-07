@@ -14,7 +14,10 @@
   "ASPECTSCOLORLESS-THE_RUNE.description": "Whenever you gain energy during your turn, draw 1 card.",
 
   "ASPECTSCOLORLESS-PENNY.title": "Penny",
-  "ASPECTSCOLORLESS-PENNY.description": "At the end of your turn, if this is in your hand, gain {Gold:diff()} [gold]Gold[/gold].",
+  "ASPECTSCOLORLESS-PENNY.description": "At the end of your turn, if this is in your [gold]Hand[/gold], gain {Gold:diff()} [gold]Gold[/gold].",
   "ASPECTSCOLORLESS-INTERFERENCE.title": "Interference",
-  "ASPECTSCOLORLESS-INTERFERENCE.description": "Remove all [gold]Buffs[/gold] from an enemy. They lose {StrengthLoss:diff()} [gold]Strength[/gold]."
+  "ASPECTSCOLORLESS-INTERFERENCE.description": "Remove all [gold]Buffs[/gold] from an enemy. They lose {StrengthLoss:diff()} [gold]Strength[/gold].",
+
+  "ASPECTSCOLORLESS-TWILIGHT_SPILL.title": "Twilight Spill",
+  "ASPECTSCOLORLESS-TWILIGHT_SPILL.description": "Deal {MinDamage:diff()}-{MaxDamage:diff()} damage.\nFor the rest of this game, swap the colors of {SwapCount} random [gold]Colorless[/gold] cards with an equal number of random cards from color pools matching enemy [gold]Intents[/gold]."
 }

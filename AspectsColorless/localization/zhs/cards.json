@@ -14,7 +14,10 @@
   "ASPECTSCOLORLESS-THE_RUNE.description": "你在回合进行中获得能量时，抽1张牌。",
 
   "ASPECTSCOLORLESS-PENNY.title": "一便士",
-  "ASPECTSCOLORLESS-PENNY.description": "回合结束时，若此牌在你的手牌中，获得{Gold:diff()}[gold]金币[/gold]。",
+  "ASPECTSCOLORLESS-PENNY.description": "回合结束时，若此牌在你的[gold]手牌[/gold]中，获得{Gold:diff()}[gold]金币[/gold]。",
   "ASPECTSCOLORLESS-INTERFERENCE.title": "干涉",
-  "ASPECTSCOLORLESS-INTERFERENCE.description": "移除一名敌人的所有[gold]增益[/gold]。使其失去{StrengthLoss:diff()}点[gold]力量[/gold]。"
+  "ASPECTSCOLORLESS-INTERFERENCE.description": "移除一名敌人的所有[gold]增益[/gold]。使其失去{StrengthLoss:diff()}点[gold]力量[/gold]。",
+
+  "ASPECTSCOLORLESS-TWILIGHT_SPILL.title": "暮光溢染",
+  "ASPECTSCOLORLESS-TWILIGHT_SPILL.description": "造成{MinDamage:diff()}-{MaxDamage:diff()}点伤害。\n本局游戏中，交换{SwapCount}张随机[gold]无色牌[/gold]与敌人[gold]意图[/gold]对应颜色卡池中的等量随机牌的颜色。"
 }

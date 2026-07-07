@@ -1,4 +1,6 @@
 ﻿{
   "TRANSMUTE.title": "Transmute",
-  "TRANSMUTE.description": "[gold]Transforms[/gold] into a random card. If this card is in your [gold]Deck[/gold], it will also be [gold]Transformed[/gold] in the [gold]Deck[/gold]."
+  "TRANSMUTE.description": "[gold]Transforms[/gold] into a random card. If this card is in your [gold]Deck[/gold], it will also be [gold]Transformed[/gold] in the [gold]Deck[/gold].",
+  "ASPECTS_PALETTE.title": "The Aspect's Palette",
+  "ASPECTS_PALETTE.description": "[gold]Intents[/gold] are classified into [red]Aggressive[/red], [blue]Defensive[/blue], [orange]Buff[/orange], [purple]Debuff[/purple] and [green]Other[/green]. When multiple types of intents are present, all corresponding color pools are used."
 }
