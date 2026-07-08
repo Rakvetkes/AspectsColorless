@@ -21,6 +21,6 @@
   "ASPECTSCOLORLESS-TWILIGHT_SPILL.title": "暮光溢染",
   "ASPECTSCOLORLESS-TWILIGHT_SPILL.description": "造成{MinDamage:diff()}-{MaxDamage:diff()}点伤害。\n本局游戏中，交换{SwapCount}张随机[gold]无色牌[/gold]与敌人[gold]意图[/gold]对应颜色卡池中的等量随机牌的颜色。",
   "ASPECTSCOLORLESS-GIFT.title": "好礼",
-  "ASPECTSCOLORLESS-GIFT.description": "造成{Damage:diff()}点伤害。\n选择并[gold]消耗[/gold]至多{Cards:diff()}张[gold]手牌[/gold]。\n给予一份装有被[gold]消耗[/gold]牌的复制[gold]礼物[/gold]。",
+  "ASPECTSCOLORLESS-GIFT.description": "造成{Damage:diff()}点伤害。\n选择并[gold]消耗[/gold]至多{Cards:diff()}张[gold]手牌[/gold]。\n给予一份装有被[gold]消耗[/gold]牌的复制的[gold]礼物[/gold]。",
   "ASPECTSCOLORLESS-GIFT.selectionScreenPrompt": "选择最多{MaxCount}张牌[gold]消耗[/gold](并送出)。"
 }

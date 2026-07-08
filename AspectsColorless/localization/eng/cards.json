@@ -21,6 +21,6 @@
   "ASPECTSCOLORLESS-TWILIGHT_SPILL.title": "Twilight Spill",
   "ASPECTSCOLORLESS-TWILIGHT_SPILL.description": "Deal {MinDamage:diff()}-{MaxDamage:diff()} damage.\nFor the rest of this game, swap the colors of {SwapCount} random [gold]Colorless[/gold] cards with an equal number of random cards from color pools matching enemy [gold]Intents[/gold].",
   "ASPECTSCOLORLESS-GIFT.title": "Gift",
-  "ASPECTSCOLORLESS-GIFT.description": "Deal {Damage:diff()} damage.\n[gold]Exhaust[/gold] up to {Cards:diff()} cards in your [gold]Hand[/gold].\nApply a [gold]Gift[/gold] containing copies of the [gold]Exhausted[/gold] cards.",
+  "ASPECTSCOLORLESS-GIFT.description": "Deal {Damage:diff()} damage.\n[gold]Exhaust[/gold] up to {Cards:diff()} cards in your [gold]Hand[/gold].\nApply a [gold]Gift[/gold] that contains copies of the [gold]Exhausted[/gold] cards.",
   "ASPECTSCOLORLESS-GIFT.selectionScreenPrompt": "Choose up to {MaxCount} cards to [gold]Exhaust[/gold] (and deliver)."
 }
