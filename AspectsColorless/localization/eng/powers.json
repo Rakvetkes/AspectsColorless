@@ -4,5 +4,9 @@
   "ASPECTSCOLORLESS-LUNARI_CHARM_POWER.smartDescription": "Whenever you play an [gold]Attack[/gold] that deals {Amount:choose(1|2):odd|even} damage, refund its cost.",
   "ASPECTSCOLORLESS-THE_RUNE_POWER.title": "The Rune",
   "ASPECTSCOLORLESS-THE_RUNE_POWER.description": "Whenever you gain energy during your turn, draw 1 card.",
-  "ASPECTSCOLORLESS-THE_RUNE_POWER.smartDescription": "Whenever you gain energy during your turn, draw [blue]{Amount}[/blue] card."
+  "ASPECTSCOLORLESS-THE_RUNE_POWER.smartDescription": "Whenever you gain energy during your turn, draw [blue]{Amount}[/blue] card.",
+  "ASPECTSCOLORLESS-GIFT_POWER.title": "Gift",
+  "ASPECTSCOLORLESS-GIFT_POWER.description": "When this enemy is attacked 3 times in one turn, add copies of the [gold]Exhausted[/gold] cards to the attacker's [gold]Hand[/gold].",
+  "ASPECTSCOLORLESS-GIFT_POWER.smartDescription": "This gift containing [blue]{CardNames}[/blue] needs [blue]{Amount}[/blue] more attack{Amount:plural:|s} to open.",
+  "ASPECTSCOLORLESS-GIFT_POWER.emptyText": "Empty"
 }
