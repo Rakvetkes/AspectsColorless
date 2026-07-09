@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace AspectsColorless.AspectsColorlessCode.Abstract;
 
-public static class AspectsHelpers
+public static class ResourceHelpers
 {
     public static IHoverTip StaticHoverTip(AspectsTips tip, params DynamicVar[] vars)
     {

@@ -1,3 +1,4 @@
+using AspectsColorless.AspectsColorlessCode.Extensions;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -33,7 +34,7 @@ public static class GainEnergyPatch
 
         if (actualGained > 0 && player.Creature.CombatState is { } combatState)
         {
-            await AspectsHook.AfterEnergyGained(combatState, player, actualGained);
+            await AfterEnergyGainedHook.AfterEnergyGained(combatState, player, actualGained);
         }
     }
 }

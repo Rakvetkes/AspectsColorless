@@ -5,7 +5,7 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace AspectsColorless.AspectsColorlessCode.Commands;
 
-public static class AspectsCmd
+public static class TransmuteCmd
 {
     public static async Task<IEnumerable<CardPileAddResult?>> TransmuteToRandom(CardModel card, Player performer)
     {

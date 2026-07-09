@@ -7,9 +7,9 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
 
-namespace AspectsColorless.AspectsColorlessCode.Patches;
+namespace AspectsColorless.AspectsColorlessCode.Extensions;
 
-public static class AspectsHook
+public static class AfterEnergyGainedHook
 {
     /// <summary>
     /// <see cref="M:MegaCrit.Sts2.Core.Hooks.Hook.IterateCombatHookListeners"/> 的复制

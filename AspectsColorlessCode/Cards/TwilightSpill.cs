@@ -1,6 +1,7 @@
 using AspectsColorless.AspectsColorlessCode.Abstract;
 using AspectsColorless.AspectsColorlessCode.Commands;
 using AspectsColorless.AspectsColorlessCode.Enumerations;
+using AspectsColorless.AspectsColorlessCode.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -11,6 +12,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace AspectsColorless.AspectsColorlessCode.Cards;
 
@@ -48,106 +50,82 @@ public class TwilightSpill() : AspectsCardModel(1, CardType.Attack, CardRarity.R
     };
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("MinDamage", 5m),
-        new DynamicVar("MaxDamage", 20m),
+        new DynamicVar("MinDamage", 0m),
+        new SensitiveDamageVar("MaxDamage", 32m, ValueProp.Move, 3),
         new DynamicVar("SwapCount", SwapCount),
     ];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        AspectsHelpers.StaticHoverTip(AspectsTips.AspectsPalette)
+        ResourceHelpers.StaticHoverTip(AspectsTips.AspectsPalette)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        // 1. Target! (¿)
-        var rng = this.Owner.RunState.Rng.CombatCardSelection;
-        int minDamage = this.DynamicVars["MinDamage"].IntValue;
-        int maxDamage = this.DynamicVars["MaxDamage"].IntValue;
-        int damage = rng.NextInt(minDamage, maxDamage + 1);
+        // 1. Capture target enemy's intents BEFORE attack (avoid reading from a dead enemy)
+        List<Type> coloredPoolTypes = [];
+        if (cardPlay.Target.Monster?.NextMove.Intents is { } intents)
+        {
+            coloredPoolTypes = intents
+                .Select(i => i.IntentType)
+                .Where(IntentColorMap.ContainsKey)
+                .Select(it => IntentColorMap[it])
+                .Distinct()
+                .ToList();
+        }
 
-        await DamageCmd.Attack(damage)
+        // 2. Damage
+        var combatRng = this.Owner.RunState.Rng.CombatTargets;
+        DamageModifiers modifiers = DamageModifierCmd.Sniff(this, cardPlay.Target, ValueProp.Move);
+        int damage = combatRng.NextInt(
+            this.DynamicVars["MinDamage"].IntValue,
+            ((SensitiveDamageVar) this.DynamicVars["MaxDamage"]).Resolve(modifiers) + 1);
+
+        await DamageCmd.Attack(DamageModifierCmd.Solve(damage, modifiers))
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
 
-        // 2. Collect enemy intent types
-        var intentTypes = this.CombatState!.Enemies
-            .Where(e => e.Monster != null)
-            .SelectMany(e => e.Monster!.NextMove.Intents)
-            .Select(i => i.IntentType)
-            .Distinct()
-            .ToList();
-
-        // 3. Map to distinct colored pool types
-        var coloredPoolTypes = intentTypes
-            .Where(IntentColorMap.ContainsKey)
-            .Select(it => IntentColorMap[it])
-            .Distinct()
-            .ToList();
-
         if (coloredPoolTypes.Count == 0) return;
 
-        // 4. Combine all cards from all matching colored pools
+        // 3. Collect all unlocked cards from matching colored pools
         var combinedColored = new List<(CardModel Card, Type PoolType)>();
         var unlockState = this.Owner.UnlockState;
         var multiplayerConstraint = this.Owner.RunState.CardMultiplayerConstraint;
         foreach (var poolType in coloredPoolTypes)
         {
-            var pool = GetCardPool(poolType);
+            var pool = CardPoolCmd.ResolvePool(poolType)!;
             foreach (var card in pool.GetUnlockedCards(unlockState, multiplayerConstraint))
-            {
                 combinedColored.Add((card, poolType));
-            }
         }
 
-        // 5. Pick SwapCount random colored cards (no duplicates)
-        var selectedColored = new List<(CardModel Card, Type PoolType)>();
-        var availableColored = new List<(CardModel Card, Type PoolType)>(combinedColored);
-        for (int i = 0; i < SwapCount && availableColored.Count > 0; i++)
-        {
-            int idx = rng.NextInt(availableColored.Count);
-            selectedColored.Add(availableColored[idx]);
-            availableColored.RemoveAt(idx);
-        }
+        // 4. Shuffle and take SwapCount from each side
+        var rng = this.Owner.RunState.Rng.CombatCardSelection;
+        var selectedColored = combinedColored
+            .OrderBy(_ => rng.NextInt(int.MaxValue))
+            .Take(SwapCount)
+            .ToList();
+        var selectedColorless = CardPoolCmd.ResolvePool(typeof(ColorlessCardPool))!
+            .GetUnlockedCards(unlockState, multiplayerConstraint)
+            .OrderBy(_ => rng.NextInt(int.MaxValue))
+            .Take(SwapCount)
+            .ToList();
 
-        // 6. Pick SwapCount random colorless cards (no duplicates)
-        var colorlessPool = ModelDb.CardPool<ColorlessCardPool>();
-        var availableColorless = colorlessPool.GetUnlockedCards(unlockState, multiplayerConstraint).ToList();
-        var selectedColorless = new List<CardModel>();
-        for (int i = 0; i < SwapCount && availableColorless.Count > 0; i++)
+        // 5. Pair and swap
+        for (int i = 0; i < Math.Min(selectedColored.Count, selectedColorless.Count); i++)
         {
-            int idx = rng.NextInt(availableColorless.Count);
-            selectedColorless.Add(availableColorless[idx]);
-            availableColorless.RemoveAt(idx);
-        }
-
-        // 7. Swap: colored → colorless, colorless → the same colored pool
-        int pairCount = Math.Min(selectedColored.Count, selectedColorless.Count);
-        for (int i = 0; i < pairCount; i++)
-        {
-            var (coloredCard, fromPool) = selectedColored[i];
+            var (coloredCard, coloredPool) = selectedColored[i];
             var colorlessCard = selectedColorless[i];
-
-            SwapCardPool(this.Owner, coloredCard, fromPool, typeof(ColorlessCardPool));
-            SwapCardPool(this.Owner, colorlessCard, typeof(ColorlessCardPool), fromPool);
+            CardPoolCmd.RemoveFromCardPool(coloredCard, coloredPool);
+            CardPoolCmd.AddToCardPool(coloredCard, typeof(ColorlessCardPool));
+            CardPoolCmd.RemoveFromCardPool(colorlessCard, typeof(ColorlessCardPool));
+            CardPoolCmd.AddToCardPool(colorlessCard, coloredPool);
         }
     }
 
     protected override void OnUpgrade()
     {
-        this.DynamicVars["MinDamage"].UpgradeValueBy(5m);
         this.DynamicVars["MaxDamage"].UpgradeValueBy(10m);
     }
 
-    // -- Pool manipulation helpers --
-
-    private static void SwapCardPool(Player player, CardModel card, Type fromPool, Type toPool)
-    {
-        CardPoolCmd.RemoveFromCardPool(player, card, fromPool.FullName!);
-        CardPoolCmd.AddToCardPool(player, card, toPool.FullName!);
-    }
-
-    private static CardPoolModel GetCardPool(Type poolType)
-        => ModelDb.AllCardPools.First(p => p.GetType() == poolType);
 }

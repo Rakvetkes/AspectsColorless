@@ -15,14 +15,14 @@ namespace AspectsColorless.AspectsColorlessCode.Cards;
 public class Weirdo() : AspectsCardModel(0, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [AspectsHelpers.StaticHoverTip(AspectsTips.Transmute)];
+        [ResourceHelpers.StaticHoverTip(AspectsTips.Transmute)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CardModel? card = PileType.Draw.GetPile(this.Owner).Cards.FirstOrDefault();
         if (card != null)
         {
-            var result = (await AspectsCmd.TransmuteToRandom(card, this.Owner)).First()!.Value.cardAdded;
+            var result = (await TransmuteCmd.TransmuteToRandom(card, this.Owner)).First()!.Value.cardAdded;
             
             if (this.IsUpgraded)
             {

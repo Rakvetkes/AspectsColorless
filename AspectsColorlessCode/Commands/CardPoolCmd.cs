@@ -1,21 +1,35 @@
 using AspectsColorless.AspectsColorlessCode.Patches;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 
 namespace AspectsColorless.AspectsColorlessCode.Commands;
 
-/// <summary>
-/// 公共入口：运行时修改卡牌池。
-/// 所有实现细节委托给 <see cref="CardPoolModStore"/>。
-/// </summary>
 public static class CardPoolCmd
 {
-    public static void AddToCardPool(Player player, CardModel card, string poolTypeName)
-        => CardPoolModStore.AddToCardPool(player, card, poolTypeName);
+    public static CardPoolModel? ResolvePool(Type poolType)
+    {
+        foreach (var pool in ModelDb.AllCardPools)
+        {
+            if (pool.GetType() == poolType)
+                return pool;
+        }
+        return null;
+    }
 
-    public static void RemoveFromCardPool(Player player, CardModel card, string poolTypeName)
-        => CardPoolModStore.RemoveFromCardPool(player, card, poolTypeName);
+    public static void AddToCardPool(CardModel card, Type poolType)
+    {
+        var pool = ResolvePool(poolType);
+        if (pool != null)
+            CardPoolModStore.AddToCardPool(card, pool);
+    }
 
-    public static void ClearAll()
-        => CardPoolModStore.ClearAll();
+    public static void RemoveFromCardPool(CardModel card, Type poolType)
+    {
+        var pool = ResolvePool(poolType);
+        if (pool != null)
+            CardPoolModStore.RemoveFromCardPool(card, pool);
+    }
+
+    public static void ClearAll() => CardPoolModStore.ClearAll();
+
+    public static CardPoolModel GetCardPool(CardModel card) => card.VisualCardPool;
 }

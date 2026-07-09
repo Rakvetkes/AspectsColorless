@@ -11,7 +11,7 @@
   "ASPECTSCOLORLESS-LUNARI_CHARM.title": "Lunari Charm",
   "ASPECTSCOLORLESS-LUNARI_CHARM.description": "Whenever you play an [gold]Attack[/gold] that deals damage with the same parity as the cost of this card, refund its cost.",
   "ASPECTSCOLORLESS-THE_RUNE.title": "The Rune",
-  "ASPECTSCOLORLESS-THE_RUNE.description": "Whenever you gain energy during your turn, draw 1 card.",
+  "ASPECTSCOLORLESS-THE_RUNE.description": "Whenever you gain [gold]Energy[/gold] during your turn, draw 1 card.",
 
   "ASPECTSCOLORLESS-PENNY.title": "Penny",
   "ASPECTSCOLORLESS-PENNY.description": "At the end of your turn, if this is in your [gold]Hand[/gold], gain {Gold:diff()} [gold]Gold[/gold].",
@@ -19,7 +19,7 @@
   "ASPECTSCOLORLESS-INTERFERENCE.description": "Remove all [gold]Buffs[/gold] from an enemy. They lose {StrengthLoss:diff()} [gold]Strength[/gold].",
 
   "ASPECTSCOLORLESS-TWILIGHT_SPILL.title": "Twilight Spill",
-  "ASPECTSCOLORLESS-TWILIGHT_SPILL.description": "Deal {MinDamage:diff()}-{MaxDamage:diff()} damage.\nFor the rest of this game, swap the colors of {SwapCount} random [gold]Colorless[/gold] cards with an equal number of random cards from color pools matching enemy [gold]Intents[/gold].",
+  "ASPECTSCOLORLESS-TWILIGHT_SPILL.description": "Deal {MinDamage:diff()}-{MaxDamage:diff()} damage.\nFor the rest of this game, swap the colors of {SwapCount} random [gold]Colorless[/gold] cards with the same number of random cards from colored pools matching this enemy's [gold]Intents[/gold].",
   "ASPECTSCOLORLESS-GIFT.title": "Gift",
   "ASPECTSCOLORLESS-GIFT.description": "Deal {Damage:diff()} damage.\n[gold]Exhaust[/gold] up to {Cards:diff()} cards in your [gold]Hand[/gold].\nApply a [gold]Gift[/gold] that contains copies of the [gold]Exhausted[/gold] cards.",
   "ASPECTSCOLORLESS-GIFT.selectionScreenPrompt": "Choose up to {MaxCount} cards to [gold]Exhaust[/gold] (and deliver)."

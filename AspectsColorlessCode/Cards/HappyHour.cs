@@ -16,7 +16,7 @@ public class HappyHour() : AspectsCardModel(0, CardType.Skill, CardRarity.Rare, 
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        AspectsHelpers.StaticHoverTip(AspectsTips.Transmute),
+        ResourceHelpers.StaticHoverTip(AspectsTips.Transmute),
         HoverTipFactory.FromCard<Drunk>(this.IsUpgraded)
     ];
 
@@ -31,7 +31,7 @@ public class HappyHour() : AspectsCardModel(0, CardType.Skill, CardRarity.Rare, 
                 CardCmd.Upgrade(newCard);
             }
 
-            await AspectsCmd.Transmute(card, newCard);
+            await TransmuteCmd.Transmute(card, newCard);
         }
 
         if (this.DeckVersion != null)
