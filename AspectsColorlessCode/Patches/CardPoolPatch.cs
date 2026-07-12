@@ -1,9 +1,14 @@
 using System.Collections.Concurrent;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
+using MegaCrit.Sts2.Core.Multiplayer.Game;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Multiplayer.Game.Lobby;
+using MegaCrit.Sts2.Core.Multiplayer.Messages.Lobby;
+using MegaCrit.Sts2.Core.Multiplayer.Serialization;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Saves.Managers;
@@ -22,17 +27,11 @@ public static class CardPoolModStore
     public sealed record SerializableMods { public Dictionary<string, SerializablePoolMod> Pools { get; set; } = new(); }
     public sealed record SerializablePoolMod { public List<string> AddedCardIds { get; set; } = new(); public List<string> RemovedCardIds { get; set; } = new(); }
 
-    // -- 内部状态 --
-
     private static readonly Lock Lock = new();
     private static readonly Dictionary<string, Modification> Modifications = new();
-
-    // -- 视觉池缓存（供 VisualCardPool getter 高性能查询） --
-
     private static readonly ConcurrentDictionary<ModelId, CardPoolModel> VisualCache = new();
-    public static CardPoolModel? GetVisualPool(ModelId cardId) => VisualCache.GetValueOrDefault(cardId);
 
-    // -- 公共命令（供 CardPoolCmd 转发） --
+    public static CardPoolModel? GetVisualPool(ModelId cardId) => VisualCache.GetValueOrDefault(cardId);
 
     public static void AddToCardPool(CardModel card, CardPoolModel pool)
     {
@@ -64,8 +63,6 @@ public static class CardPoolModStore
             VisualCache.Clear();
         }
     }
-
-    // -- Patch 查询 API --
 
     public static void ApplyModifications(CardPoolModel pool, List<CardModel> cards)
     {
@@ -99,8 +96,6 @@ public static class CardPoolModStore
             }
         }
     }
-
-    // -- 序列化 --
 
     public static SerializableMods? Serialize()
     {
@@ -165,8 +160,6 @@ public static class CardPoolModStore
         }
     }
 
-    // -- 私有辅助（调用方必须持有 Lock） --
-
     private static Modification GetOrCreateLocked(string poolTypeName)
     {
         if (!Modifications.TryGetValue(poolTypeName, out var mod))
@@ -183,14 +176,20 @@ public static class CardPoolSavePersistence
 {
     private const string ModsJsonProperty = "ac_card_pool_mods";
 
-    public static void InjectModsIntoSave(bool isMultiplayer)
+    public static async Task InjectModsIntoSave(bool isMultiplayer)
     {
         try
         {
-            string path = GetSavePath(isMultiplayer);
-            if (!File.Exists(path)) return;
+            var saveStore = GetSaveStore();
+            if (saveStore == null) return;
 
-            string json = File.ReadAllText(path);
+            int profileId = SaveManager.Instance.CurrentProfileId;
+            string fileName = isMultiplayer ? "current_run_mp.save" : "current_run.save";
+            string relativePath = RunSaveManager.GetRunSavePath(profileId, fileName);
+
+            string? json = await saveStore.ReadFileAsync(relativePath);
+            if (json == null) return;
+
             JsonNode? root = JsonNode.Parse(json);
             if (root is not JsonObject obj) return;
 
@@ -200,7 +199,7 @@ public static class CardPoolSavePersistence
             else
                 obj.Remove(ModsJsonProperty);
 
-            File.WriteAllText(path, obj.ToJsonString());
+            await saveStore.WriteFileAsync(relativePath, obj.ToJsonString());
         }
         catch (Exception ex)
         {
@@ -212,24 +211,27 @@ public static class CardPoolSavePersistence
     {
         try
         {
-            string path = GetSavePath(isMultiplayer);
-            if (File.Exists(path))
-            {
-                string json = File.ReadAllText(path);
-                JsonNode? root = JsonNode.Parse(json);
-                if (root is JsonObject obj
-                    && obj.TryGetPropertyValue(ModsJsonProperty, out var modsNode)
-                    && modsNode != null)
-                {
-                    var data = modsNode.Deserialize<CardPoolModStore.SerializableMods>();
-                    if (data != null)
-                    {
-                        CardPoolModStore.Deserialize(data);
-                        return;
-                    }
-                }
-            }
-            CardPoolModStore.ClearAll();
+            var saveStore = GetSaveStore();
+            if (saveStore == null) return;
+
+            int profileId = SaveManager.Instance.CurrentProfileId;
+            string fileName = isMultiplayer ? "current_run_mp.save" : "current_run.save";
+            string relativePath = RunSaveManager.GetRunSavePath(profileId, fileName);
+
+            if (!saveStore.FileExists(relativePath)) return;
+
+            string? json = saveStore.ReadFile(relativePath);
+            if (json == null) return;
+
+            JsonNode? root = JsonNode.Parse(json);
+            if (root is not JsonObject obj) return;
+
+            if (!obj.TryGetPropertyValue(ModsJsonProperty, out var modsNode) || modsNode == null)
+                return;
+
+            var data = modsNode.Deserialize<CardPoolModStore.SerializableMods>();
+            if (data != null)
+                CardPoolModStore.Deserialize(data);
         }
         catch (Exception ex)
         {
@@ -237,15 +239,83 @@ public static class CardPoolSavePersistence
         }
     }
 
-    // I think this thing is kinda... dangerous. Who knows.
-    public static string GetSavePath(bool isMultiplayer)
+    private static ISaveStore? GetSaveStore()
     {
-        int profileId = SaveManager.Instance.CurrentProfileId;
-        string fileName = isMultiplayer ? "current_run_mp.save" : "current_run.save";
-        string relativePath = RunSaveManager.GetRunSavePath(profileId, fileName);
-        string godotPath = UserDataPathProvider.GetAccountScopedBasePath(null) + "/" + relativePath;
-        return Godot.ProjectSettings.GlobalizePath(godotPath);
+        var field = typeof(SaveManager).GetField("_saveStore",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+        return field?.GetValue(SaveManager.Instance) as ISaveStore;
     }
+}
+
+
+public static class CardPoolNetSync
+{
+    /// <summary>"ACMP" — magic marker for detecting postfix ordering conflicts.</summary>
+    private const int NetMagic = 0x41434D50;
+    private static CardPoolModStore.SerializableMods? _pendingNetworkMods;
+
+    public static void Write(PacketWriter writer)
+    {
+        var mods = CardPoolModStore.Serialize();
+        writer.WriteBool(mods != null);
+        if (mods != null)
+        {
+            writer.WriteInt(NetMagic);
+            writer.WriteString(JsonSerializer.Serialize(mods));
+        }
+    }
+
+    public static void Read(PacketReader reader)
+    {
+        if (!reader.ReadBool())
+        {
+            Store(null);
+            return;
+        }
+
+        int magic = reader.ReadInt();
+        if (magic != NetMagic)
+        {
+            Log.Error(
+                $"[CardPoolNetSync] Network magic mismatch! " +
+                $"Expected 0x{NetMagic:X8} (\"ACMP\"), got 0x{magic:X8}. " +
+                "Possible Harmony postfix ordering conflict with another mod — " +
+                "card pool mods disabled for this session.");
+            Store(null);
+            return;
+        }
+
+        string json = reader.ReadString();
+        try
+        {
+            Store(JsonSerializer.Deserialize<CardPoolModStore.SerializableMods>(json));
+        }
+        catch (JsonException ex)
+        {
+            Log.Error(
+                $"[CardPoolNetSync] Failed to parse network mod JSON: {ex.Message}. " +
+                $"Raw (first 200 chars): {json[..Math.Min(json.Length, 200)]}");
+            Store(null);
+        }
+    }
+
+    private static void Store(CardPoolModStore.SerializableMods? mods)
+    {
+        if (_pendingNetworkMods != null)
+            Log.Warn("[CardPoolNetSync] Overwriting non-null pending mods — was RestorePending() not called?");
+        _pendingNetworkMods = mods;
+    }
+
+    public static bool RestorePending()
+    {
+        if (_pendingNetworkMods == null) return false;
+        CardPoolModStore.Deserialize(_pendingNetworkMods);
+        _pendingNetworkMods = null;
+        return true;
+    }
+
+    public static void ClearPending()
+        => _pendingNetworkMods = null;
 }
 
 
@@ -254,9 +324,7 @@ public static class CardPoolPatch
 {
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CardPoolModel), nameof(CardPoolModel.GetUnlockedCards))]
-    private static void GetUnlockedCards_Postfix(
-        CardPoolModel __instance,
-        ref IEnumerable<CardModel> __result)
+    private static void GetUnlockedCards_Postfix(CardPoolModel __instance, ref IEnumerable<CardModel> __result)
     {
         var cards = __result as List<CardModel> ?? __result.ToList();
         CardPoolModStore.ApplyModifications(__instance, cards);
@@ -273,6 +341,7 @@ public static class CardPoolPatch
     }
 
     
+    // Save
     [HarmonyPostfix]
     [HarmonyPatch(typeof(RunSaveManager), nameof(RunSaveManager.SaveRun), typeof(SerializableRun), typeof(bool))]
     public static void RunSaveManager_SaveRun_Postfix(ref Task __result, bool isMultiplayer)
@@ -283,29 +352,77 @@ public static class CardPoolPatch
     private static async Task SaveRun_Postfix_Awaited(Task originalTask, bool isMultiplayer)
     {
         await originalTask;
-        CardPoolSavePersistence.InjectModsIntoSave(isMultiplayer);
+        await CardPoolSavePersistence.InjectModsIntoSave(isMultiplayer);
     }
 
-    [HarmonyPostfix]
-    [HarmonyPatch(typeof(RunSaveManager), nameof(RunSaveManager.LoadRunSave))]
-    private static void RunSaveManager_LoadRunSave_Postfix(ref ReadSaveResult<SerializableRun> __result)
-    {
-        if (__result?.Success == true)
-            CardPoolSavePersistence.RestoreModsFromSave(isMultiplayer: false);
-    }
+    
+    // New game
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(RunManager), nameof(RunManager.SetUpNewSingleplayer))]
+    private static void SetUpNewSingleplayer_Prefix()
+        => CardPoolModStore.ClearAll();
 
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(RunManager), nameof(RunManager.SetUpNewMultiplayer))]
+    private static void SetUpNewMultiplayer_Prefix()
+        => CardPoolModStore.ClearAll();
+
+    
+    // Singleplayer Loading
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(RunManager), nameof(RunManager.SetUpSavedSingleplayer))]
+    private static void SetUpSavedSingleplayer_Prefix()
+        => CardPoolSavePersistence.RestoreModsFromSave(isMultiplayer: false);
+
+    
+    // Multiplayer Loading, Host (Early)
     [HarmonyPostfix]
-    [HarmonyPatch(typeof(RunSaveManager), nameof(RunSaveManager.LoadMultiplayerRunSave))]
-    private static void RunSaveManager_LoadMultiplayerRunSave_Postfix(ref ReadSaveResult<SerializableRun> __result)
+    [HarmonyPatch(typeof(RunSaveManager), nameof(RunSaveManager.LoadAndCanonicalizeMultiplayerRunSave))]
+    private static void LoadAndCanonicalizeMultiplayerRunSave_Postfix(ReadSaveResult<SerializableRun> __result)
     {
         if (__result?.Success == true)
             CardPoolSavePersistence.RestoreModsFromSave(isMultiplayer: true);
     }
 
     
+    // Multiplayer Loading, Client (Late)
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(RunManager), nameof(RunManager.SetUpSavedMultiplayer))]
+    private static void SetUpSavedMultiplayer_Prefix(LoadRunLobby lobby)
+    {
+        if (lobby.NetService.Type == NetGameType.Client)
+            CardPoolNetSync.RestorePending();
+    }
+
+    
+    // Multiplayer Loading, Sync (Between)
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(ClientLoadJoinResponseMessage), nameof(ClientLoadJoinResponseMessage.Serialize))]
+    private static void ClientLoadJoinResponse_Serialize_Postfix(PacketWriter writer)
+        => CardPoolNetSync.Write(writer);
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(ClientLoadJoinResponseMessage), nameof(ClientLoadJoinResponseMessage.Deserialize))]
+    private static void ClientLoadJoinResponse_Deserialize_Postfix(PacketReader reader)
+        => CardPoolNetSync.Read(reader);
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(ClientRejoinResponseMessage), nameof(ClientRejoinResponseMessage.Serialize))]
+    private static void ClientRejoinResponse_Serialize_Postfix(PacketWriter writer)
+        => CardPoolNetSync.Write(writer);
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(ClientRejoinResponseMessage), nameof(ClientRejoinResponseMessage.Deserialize))]
+    private static void ClientRejoinResponse_Deserialize_Postfix(PacketReader reader)
+        => CardPoolNetSync.Read(reader);
+
+    
+    // Cleanup
     [HarmonyPostfix]
     [HarmonyPatch(typeof(RunManager), nameof(RunManager.CleanUp))]
     private static void RunManager_CleanUp_Postfix()
-        => CardPoolModStore.ClearAll();
-
+    {
+        CardPoolModStore.ClearAll();
+        CardPoolNetSync.ClearPending();
+    }
 }
