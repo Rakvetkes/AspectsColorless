@@ -2,5 +2,7 @@
   "TRANSMUTE.title": "转化",
   "TRANSMUTE.description": "[gold]变化[/gold]为随机牌。如果这张牌属于你的[gold]牌组[/gold]，它也会在[gold]牌组[/gold]中被同时[gold]变化[/gold]。",
   "ASPECTS_PALETTE.title": "星彩调色盘",
-  "ASPECTS_PALETTE.description": "[gold]意图[/gold]分为[red]攻击型[/red]、[blue]防御型[/blue]、[orange]增益型[/orange]、[purple]减益型[/purple]和[green]其他[/green]。当存在多种[gold]意图[/gold]时，同时使用所有对应颜色的卡池。"
+  "ASPECTS_PALETTE.description": "[gold]意图[/gold]分为[red]攻击型[/red]、[blue]防御型[/blue]、[orange]增益型[/orange]、[purple]减益型[/purple]和[green]其他[/green]。当存在多种[gold]意图[/gold]时，同时使用所有对应颜色的卡池。",
+  "PORTAL.title": "折跃",
+  "PORTAL.description": "直到下回合抽牌结束，翻转并交换你的[gold]抽牌堆[/gold]和[gold]弃牌堆[/gold]。"
 }

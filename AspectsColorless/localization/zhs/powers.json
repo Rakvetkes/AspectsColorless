@@ -8,5 +8,12 @@
   "ASPECTSCOLORLESS-GIFT_POWER.title": "礼物",
   "ASPECTSCOLORLESS-GIFT_POWER.description": "这名敌人在一回合内被攻击3次时，将被[gold]消耗[/gold]牌的复制加入攻击者的[gold]手牌[/gold]。",
   "ASPECTSCOLORLESS-GIFT_POWER.smartDescription": "这份包含[blue]{CardNames}[/blue]的礼物还需要[blue]{Amount}[/blue]次攻击打开。",
-  "ASPECTSCOLORLESS-GIFT_POWER.emptyText": "空"
+  "ASPECTSCOLORLESS-GIFT_POWER.emptyText": "空",
+  
+  "ASPECTSCOLORLESS-PORTALED_POWER.title": "已折跃",
+  "ASPECTSCOLORLESS-PORTALED_POWER.description": "你的[gold]抽牌堆[/gold]和[gold]弃牌堆[/gold]将在下回合的抽牌后翻转并交换。",
+  "ASPECTSCOLORLESS-PORTALED_POWER.smartDescription": "你的[gold]抽牌堆[/gold]和[gold]弃牌堆[/gold]将在下回合的抽牌后翻转并交换。",
+  "ASPECTSCOLORLESS-ASTRAL_COUNTERPOINT_POWER.title": "星界对位",
+  "ASPECTSCOLORLESS-ASTRAL_COUNTERPOINT_POWER.description": "你打出的与上一张牌颜色不同的牌将被额外打出一次。",
+  "ASPECTSCOLORLESS-ASTRAL_COUNTERPOINT_POWER.smartDescription": "你打出的与上一张牌颜色不同的牌将被额外打出[blue]{Amount}[/blue]次。"
 }

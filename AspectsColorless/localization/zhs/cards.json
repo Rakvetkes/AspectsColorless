@@ -17,10 +17,14 @@
   "ASPECTSCOLORLESS-PENNY.description": "回合结束时，若此牌在你的[gold]手牌[/gold]中，获得{Gold:diff()}[gold]金币[/gold]。",
   "ASPECTSCOLORLESS-INTERFERENCE.title": "干涉",
   "ASPECTSCOLORLESS-INTERFERENCE.description": "移除一名敌人的所有[gold]增益[/gold]。使其失去{StrengthLoss:diff()}点[gold]力量[/gold]。",
+  "ASPECTSCOLORLESS-GIFT.title": "好礼",
+  "ASPECTSCOLORLESS-GIFT.description": "造成{Damage:diff()}点伤害。\n选择并[gold]消耗[/gold]至多{Cards:diff()}张[gold]手牌[/gold]。给予一份装有这些牌的复制的[gold]礼物[/gold]。",
+  "ASPECTSCOLORLESS-GIFT.selectionScreenPrompt": "选择最多{MaxCount}张牌[gold]消耗[/gold](并送出)。",
 
   "ASPECTSCOLORLESS-TWILIGHT_SPILL.title": "暮光溢染",
   "ASPECTSCOLORLESS-TWILIGHT_SPILL.description": "造成{MinDamage:diff()}-{MaxDamage:diff()}点伤害。\n本局游戏中，交换{SwapCount}张随机[gold]无色牌[/gold]与这个敌人[gold]意图[/gold]对应颜色的卡池中等量随机牌的颜色。",
-  "ASPECTSCOLORLESS-GIFT.title": "好礼",
-  "ASPECTSCOLORLESS-GIFT.description": "造成{Damage:diff()}点伤害。\n选择并[gold]消耗[/gold]至多{Cards:diff()}张[gold]手牌[/gold]。\n给予一份装有被[gold]消耗[/gold]牌的复制的[gold]礼物[/gold]。",
-  "ASPECTSCOLORLESS-GIFT.selectionScreenPrompt": "选择最多{MaxCount}张牌[gold]消耗[/gold](并送出)。"
+  "ASPECTSCOLORLESS-PORTAL_TRICK.title": "折跃魔术",
+  "ASPECTSCOLORLESS-PORTAL_TRICK.description": "丢弃你的所有[gold]手牌[/gold]。\n抽{Cards:diff()}张牌。\n[gold]折跃[/gold]。",
+  "ASPECTSCOLORLESS-ASTRAL_COUNTERPOINT.title": "星界对位",
+  "ASPECTSCOLORLESS-ASTRAL_COUNTERPOINT.description": "你打出的与上一张牌颜色不同的牌将被打出两次。"
 }

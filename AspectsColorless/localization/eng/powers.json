@@ -8,5 +8,12 @@
   "ASPECTSCOLORLESS-GIFT_POWER.title": "Gift",
   "ASPECTSCOLORLESS-GIFT_POWER.description": "When this enemy is attacked 3 times in one turn, add copies of the [gold]Exhausted[/gold] cards to the attacker's [gold]Hand[/gold].",
   "ASPECTSCOLORLESS-GIFT_POWER.smartDescription": "This gift containing [blue]{CardNames}[/blue] needs [blue]{Amount}[/blue] more attack{Amount:plural:|s} to open.",
-  "ASPECTSCOLORLESS-GIFT_POWER.emptyText": "Empty"
+  "ASPECTSCOLORLESS-GIFT_POWER.emptyText": "Empty",
+  
+  "ASPECTSCOLORLESS-PORTALED_POWER.title": "Portaled",
+  "ASPECTSCOLORLESS-PORTALED_POWER.description": "Your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] will flip and swap after your next turn's draw.",
+  "ASPECTSCOLORLESS-PORTALED_POWER.smartDescription": "Your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] will flip and swap after your next turn's draw.",
+  "ASPECTSCOLORLESS-ASTRAL_COUNTERPOINT_POWER.title": "Astral Counterpoint",
+  "ASPECTSCOLORLESS-ASTRAL_COUNTERPOINT_POWER.description": "Cards with a different color than the last card played are played an extra time.",
+  "ASPECTSCOLORLESS-ASTRAL_COUNTERPOINT_POWER.smartDescription": "Cards with a different color than the last are played [blue]{Amount}[/blue] extra time{Amount:plural:|s}."
 }

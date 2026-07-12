@@ -6,4 +6,5 @@ public enum AspectsTips
 {
     Transmute = 1,
     AspectsPalette = 2,
+    Portal = 3,
 }
